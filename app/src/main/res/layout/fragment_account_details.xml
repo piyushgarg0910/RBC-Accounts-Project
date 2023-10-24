@@ -69,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/account_details_list_item"/>
+        tools:listitem="@layout/account_details_transaction_list_item"/>
 
     <ProgressBar
         android:id="@+id/account_details_progress_bar"

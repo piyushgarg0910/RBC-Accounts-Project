@@ -2,8 +2,13 @@ package com.rbc.accounts.viewmodel.fragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rbc.accounts.model.AccountTransactionDateType
+import com.rbc.accounts.model.AccountTransactionDetailType
+import com.rbc.accounts.model.BaseAccountDetailsSummaryModel
 import com.rbc.accounts.result.AccountDetailsResult
 import com.rbc.accounts.usecase.AccountsUseCase
+import com.rbc.accounts.util.DateToDayConverter.calendarToDayConverter
+import com.rbc.accounts.view.viewHolder.AccountDetailsViewHolderType
 import com.rbc.rbcaccountlibrary.Transaction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,10 +58,39 @@ class AccountDetailsFragmentViewModel@Inject constructor(
             _uiState.update {
                 when (transactionResult) {
                     is AccountDetailsResult.Success -> {
+                        val transactionsMap = HashMap<Calendar, ArrayList<Transaction>>()
+                        transactionResult.transactions.forEach { transaction ->
+                            val transactionDay = calendarToDayConverter(transaction.date)
+                            if (transactionsMap.containsKey(transactionDay)) {
+                                transactionsMap[transactionDay]?.add(transaction)
+                                transactionsMap[transactionDay]?.sortByDescending { datedTransactions ->
+                                    datedTransactions.date
+                                }
+                            } else {
+                                transactionsMap[transactionDay] = arrayListOf(transaction)
+                            }
+                        }
+
+                        val transactionsSummary = ArrayList<BaseAccountDetailsSummaryModel>()
+                        transactionsMap.forEach { (t, u) ->
+                            transactionsSummary.add(AccountTransactionDateType(t, AccountDetailsViewHolderType.DATE))
+                            u.forEach { transaction ->
+                                transactionsSummary
+                                    .add(
+                                        AccountTransactionDetailType(
+                                            transaction.date,
+                                            AccountDetailsViewHolderType.TRANSACTION,
+                                            transaction.amount,
+                                            transaction.description
+                                        )
+                                    )
+                            }
+                        }
+
                         it.copy(
                             isLoading = false,
                             isError = false,
-                            transactions = transactionResult.transactions,
+                            transactions = transactionsSummary,
                             errorType = ErrorType.NO_ERROR
                         )
                     }
@@ -94,7 +129,7 @@ class AccountDetailsFragmentViewModel@Inject constructor(
 
     data class UiState(
         val isLoading: Boolean = false,
-        val transactions: List<Transaction> = emptyList(),
+        val transactions: List<BaseAccountDetailsSummaryModel> = emptyList(),
         val isError: Boolean = false,
         val errorType: ErrorType = ErrorType.NO_ERROR,
         val isAccountNumberVisible: Boolean = false
