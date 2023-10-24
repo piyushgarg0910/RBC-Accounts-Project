@@ -10,8 +10,7 @@ class AccountDetailsTransactionListItemViewHolder(private val binding: AccountDe
     : RecyclerView.ViewHolder(binding.root){
 
     fun bind(transaction: AccountTransactionDetailType) {
-        binding.transactionDateTextView.text =
-            CalendarToDateStringConverter.getInstance().format(transaction.date.timeInMillis)
+        binding.transactionDateTextView.text = transaction.date
         binding.transactionDescriptionTextView.text = transaction.description
         binding.transactionValueTextView.text =
             StringToCurrencyConverter.getInstance().format(transaction.amount)

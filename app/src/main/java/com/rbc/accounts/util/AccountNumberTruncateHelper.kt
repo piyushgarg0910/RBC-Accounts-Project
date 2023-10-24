@@ -12,7 +12,7 @@ object AccountNumberTruncateHelper {
 
 
     fun String.hidePartialNumber() : String {
-        return if (length < 6) {
+        return if (length <= 7) {
             "****${substring(length-3, length-1)}"
         } else {
             "${substring(0, 2)}******${substring(length - 5, length - 1)}"

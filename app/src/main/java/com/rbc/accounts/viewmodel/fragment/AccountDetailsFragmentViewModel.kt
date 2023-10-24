@@ -7,7 +7,7 @@ import com.rbc.accounts.model.AccountTransactionDetailType
 import com.rbc.accounts.model.BaseAccountDetailsSummaryModel
 import com.rbc.accounts.result.AccountDetailsResult
 import com.rbc.accounts.usecase.AccountsUseCase
-import com.rbc.accounts.util.DateToDayConverter.calendarToDayConverter
+import com.rbc.accounts.util.CalendarToDateStringConverter
 import com.rbc.accounts.view.viewHolder.AccountDetailsViewHolderType
 import com.rbc.rbcaccountlibrary.Transaction
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,9 +57,9 @@ class AccountDetailsFragmentViewModel@Inject constructor(
             _uiState.update {
                 when (transactionResult) {
                     is AccountDetailsResult.Success -> {
-                        val transactionsMap = HashMap<Calendar, ArrayList<Transaction>>()
+                        val transactionsMap = LinkedHashMap<String, ArrayList<Transaction>>()
                         transactionResult.transactions.forEach { transaction ->
-                            val transactionDay = calendarToDayConverter(transaction.date)
+                            val transactionDay = CalendarToDateStringConverter.getInstance().formatToDateListItem(transaction.date.timeInMillis)
                             if (transactionsMap.containsKey(transactionDay)) {
                                 transactionsMap[transactionDay]?.add(transaction)
                                 transactionsMap[transactionDay]?.sortByDescending { datedTransactions ->
@@ -78,7 +77,7 @@ class AccountDetailsFragmentViewModel@Inject constructor(
                                 transactionsSummary
                                     .add(
                                         AccountTransactionDetailType(
-                                            transaction.date,
+                                            CalendarToDateStringConverter.getInstance().format(transaction.date.timeInMillis),
                                             AccountDetailsViewHolderType.TRANSACTION,
                                             transaction.amount,
                                             transaction.description

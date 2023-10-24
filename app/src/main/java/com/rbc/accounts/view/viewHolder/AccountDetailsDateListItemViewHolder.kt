@@ -9,7 +9,6 @@ class AccountDetailsDateListItemViewHolder(private val binding: AccountDetailsDa
     : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(dateItem: AccountTransactionDateType) {
-            binding.accountTransactionDateTextView.text =
-                CalendarToDateStringConverter.getInstance().formatToDateListItem(dateItem.date.timeInMillis)
+            binding.accountTransactionDateTextView.text = dateItem.date
         }
 }
