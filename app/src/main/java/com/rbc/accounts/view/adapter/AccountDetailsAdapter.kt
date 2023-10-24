@@ -15,8 +15,8 @@ import com.rbc.accounts.view.viewHolder.AccountDetailsTransactionListItemViewHol
 import com.rbc.accounts.view.viewHolder.AccountDetailsViewHolderType
 
 class AccountDetailsAdapter
-    : ListAdapter<BaseAccountDetailsSummaryModel, RecyclerView.ViewHolder>(TransactionDiffUtilCallback()) {
-
+    : ListAdapter<BaseAccountDetailsSummaryModel, RecyclerView.ViewHolder>(TransactionDiffUtilCallback())
+{
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -55,5 +55,4 @@ class AccountDetailsAdapter
     }
 
     override fun getItemViewType(position: Int) = getItem(position).viewType.type
-
 }

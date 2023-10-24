@@ -57,39 +57,11 @@ class AccountDetailsFragmentViewModel@Inject constructor(
             _uiState.update {
                 when (transactionResult) {
                     is AccountDetailsResult.Success -> {
-                        val transactionsMap = LinkedHashMap<String, ArrayList<Transaction>>()
-                        transactionResult.transactions.forEach { transaction ->
-                            val transactionDay = CalendarToDateStringConverter.getInstance().formatToDateListItem(transaction.date.timeInMillis)
-                            if (transactionsMap.containsKey(transactionDay)) {
-                                transactionsMap[transactionDay]?.add(transaction)
-                                transactionsMap[transactionDay]?.sortByDescending { datedTransactions ->
-                                    datedTransactions.date
-                                }
-                            } else {
-                                transactionsMap[transactionDay] = arrayListOf(transaction)
-                            }
-                        }
-
-                        val transactionsSummary = ArrayList<BaseAccountDetailsSummaryModel>()
-                        transactionsMap.forEach { (t, u) ->
-                            transactionsSummary.add(AccountTransactionDateType(t, AccountDetailsViewHolderType.DATE))
-                            u.forEach { transaction ->
-                                transactionsSummary
-                                    .add(
-                                        AccountTransactionDetailType(
-                                            CalendarToDateStringConverter.getInstance().format(transaction.date.timeInMillis),
-                                            AccountDetailsViewHolderType.TRANSACTION,
-                                            transaction.amount,
-                                            transaction.description
-                                        )
-                                    )
-                            }
-                        }
 
                         it.copy(
                             isLoading = false,
                             isError = false,
-                            transactions = transactionsSummary,
+                            transactions = getAccountTransactionListFromTransactionsList(transactionResult.transactions),
                             errorType = ErrorType.NO_ERROR
                         )
                     }
@@ -139,5 +111,39 @@ class AccountDetailsFragmentViewModel@Inject constructor(
         NO_TRANSACTIONS,
         UNABLE_TO_RETRIEVE_TRANSACTIONS,
         INCORRECT_ACCOUNT_INFORMATION
+    }
+
+    private fun getAccountTransactionListFromTransactionsList(transactions: List<Transaction>) :
+            List<BaseAccountDetailsSummaryModel>
+    {
+        val transactionsMap = LinkedHashMap<String, ArrayList<Transaction>>()
+        transactions.forEach { transaction ->
+            val transactionDay = CalendarToDateStringConverter.getInstance().formatToDateListItem(transaction.date.timeInMillis)
+            if (transactionsMap.containsKey(transactionDay)) {
+                transactionsMap[transactionDay]?.add(transaction)
+                transactionsMap[transactionDay]?.sortByDescending { datedTransactions ->
+                    datedTransactions.date
+                }
+            } else {
+                transactionsMap[transactionDay] = arrayListOf(transaction)
+            }
+        }
+
+        val transactionsSummary = ArrayList<BaseAccountDetailsSummaryModel>()
+        transactionsMap.forEach { (t, u) ->
+            transactionsSummary.add(AccountTransactionDateType(t, AccountDetailsViewHolderType.DATE))
+            u.forEach { transaction ->
+                transactionsSummary
+                    .add(
+                        AccountTransactionDetailType(
+                            CalendarToDateStringConverter.getInstance().format(transaction.date.timeInMillis),
+                            AccountDetailsViewHolderType.TRANSACTION,
+                            transaction.amount,
+                            transaction.description
+                        )
+                    )
+            }
+        }
+        return transactionsSummary
     }
 }
