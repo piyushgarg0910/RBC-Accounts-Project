@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="account_list_item_separator_height">1dp</dimen>
+    <dimen name="heading_list_item_separator_height">4dp</dimen>
+    <dimen name="list_item_separator_width">100dp</dimen>
+
+    <dimen name="progress_bar_size">80dp</dimen>
+
+    <dimen name="view_to_parent_margin">16dp</dimen>
+    <dimen name="text_padding">4dp</dimen>
+    <dimen name="view_padding">8dp</dimen>
+
+    <dimen name="xs_font">14sp</dimen>
+    <dimen name="small_font">16sp</dimen>
+    <dimen name="medium_font">18sp</dimen>
+    <dimen name="large_font">20sp</dimen>
+    <dimen name="xl_font">24sp</dimen>
+    <dimen name="xxl_font">28sp</dimen>
+</resources>

@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RBCUserAccounts" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/rbc_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/rbc_yellow</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="android:statusBarColor">@color/rbc_blue</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
+
+    <style name="Theme.RBCUserAccounts" parent="Base.Theme.RBCUserAccounts"/>
+</resources>

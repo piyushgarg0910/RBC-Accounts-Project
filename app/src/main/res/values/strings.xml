@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RBC User Accounts</string>
+    <string name="account_summary_screen_toolbar_title">Accounts</string>
+    <string name="account_details_screen_toolbar_title">Account Details</string>
+    <string name="chequing_account_type">Chequing</string>
+    <string name="credit_card_account_type">Credit Card</string>
+    <string name="loan_account_type">Loan</string>
+    <string name="mortgage_account_type">Mortgage</string>
+    <string name="loading_transactions">Loading Transactions</string>
+    <string name="loading_accounts">Loading Accounts</string>
+    <string name="unknown_error_while_fetching_data">We have run into some issues. Please try again after some time</string>
+    <string name="unable_to_retrieve_transaction">Unable to retrieve transactions. Please try again later</string>
+    <string name="no_transactions_for_account">There are no transactions on this account</string>
+    <string name="incorrect_account_information">Incorrect account information</string>
+</resources>

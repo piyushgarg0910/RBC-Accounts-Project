@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".view.activity.AccountsActivity">
+
+    <TextView
+        android:id="@+id/account_details_name_value"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textSize="@dimen/xl_font"
+        android:layout_marginTop="@dimen/view_to_parent_margin"
+        android:layout_marginStart="@dimen/view_to_parent_margin"
+        android:layout_marginEnd="@dimen/view_to_parent_margin"
+        android:padding="@dimen/view_padding"
+        android:textColor="@color/rbc_blue"
+        tools:text="Chequing"
+        android:maxLines="1"/>
+
+    <TextView
+        android:id="@+id/account_details_number_value"
+        app:layout_constraintTop_toBottomOf="@id/account_details_name_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/account_details_number_visibility_icon"
+        android:textSize="@dimen/medium_font"
+        android:layout_marginStart="@dimen/view_to_parent_margin"
+        android:layout_marginEnd="@dimen/view_to_parent_margin"
+        android:padding="@dimen/view_padding"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="start"
+        tools:text="123456484"
+        android:textColor="@color/rbc_blue"
+        android:maxLines="1"/>
+
+    <ImageView
+        android:id="@+id/account_details_number_visibility_icon"
+        app:layout_constraintTop_toTopOf="@id/account_details_number_value"
+        app:layout_constraintBottom_toBottomOf="@id/account_details_number_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/view_to_parent_margin"
+        android:src="@drawable/icon_account_number_invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:id="@+id/account_details_balance_value"
+        app:layout_constraintTop_toBottomOf="@id/account_details_number_value"
+        android:layout_marginStart="@dimen/view_to_parent_margin"
+        android:layout_marginEnd="@dimen/view_to_parent_margin"
+        android:padding="@dimen/view_padding"
+        android:textSize="@dimen/xxl_font"
+        android:textStyle="bold"
+        tools:text="$25,300.67"
+        android:textColor="@color/rbc_blue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/account_details_recycler_view"
+        app:layout_constraintTop_toBottomOf="@id/account_details_balance_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:listitem="@layout/account_details_list_item"/>
+
+    <ProgressBar
+        android:id="@+id/account_details_progress_bar"
+        app:layout_constraintTop_toBottomOf="@id/account_details_balance_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="@dimen/progress_bar_size"
+        android:layout_height="@dimen/progress_bar_size"/>
+
+    <TextView
+        android:id="@+id/account_details_loading_text"
+        app:layout_constraintTop_toBottomOf="@id/account_details_progress_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/xs_font"
+        android:layout_marginTop="@dimen/view_padding"
+        android:text="@string/loading_transactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/account_details_error_text"
+        app:layout_constraintTop_toBottomOf="@id/account_details_balance_value"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:layout_margin="@dimen/view_to_parent_margin"
+        android:padding="@dimen/view_padding"
+        android:textSize="@dimen/small_font"
+        android:textStyle="bold"
+        tools:text="There was an error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
