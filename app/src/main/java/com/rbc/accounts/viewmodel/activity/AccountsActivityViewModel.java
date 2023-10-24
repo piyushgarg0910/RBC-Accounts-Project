@@ -8,7 +8,8 @@ import com.rbc.accounts.model.AccountInfoSummaryType;
 
 public class AccountsActivityViewModel extends ViewModel {
 
-    private MutableLiveData<AccountInfoSummaryType> _accountSelectedLiveData = new MutableLiveData();
+    private final MutableLiveData<AccountInfoSummaryType> _accountSelectedLiveData =
+            new MutableLiveData<>();
     public LiveData<AccountInfoSummaryType> accountSelectedLiveData = _accountSelectedLiveData;
 
     public void accountSelected(AccountInfoSummaryType account) {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rbc.accounts.R
 import com.rbc.accounts.databinding.FragmentAccountDetailsBinding
+import com.rbc.accounts.model.BaseAccountDetailsSummaryModel
 import com.rbc.accounts.util.AccountNumberTruncateHelper.hidePartialNumber
 import com.rbc.accounts.util.StringToCurrencyConverter
 import com.rbc.accounts.view.AccountDetailsItemSeparator
@@ -23,7 +24,6 @@ import com.rbc.accounts.view.activity.AccountsActivity.ACCOUNT_NAME
 import com.rbc.accounts.view.adapter.AccountDetailsAdapter
 import com.rbc.accounts.viewmodel.fragment.AccountDetailsFragmentViewModel
 import com.rbc.rbcaccountlibrary.AccountType
-import com.rbc.rbcaccountlibrary.Transaction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -154,7 +154,7 @@ class AccountDetailsFragment : Fragment() {
         binding.accountDetailsErrorText.text = null
     }
 
-    private fun showAccountDetails(transactions: List<Transaction>) {
+    private fun showAccountDetails(transactions: List<BaseAccountDetailsSummaryModel>) {
         binding.accountDetailsRecyclerView.isVisible = true
         adapter.submitList(transactions)
     }

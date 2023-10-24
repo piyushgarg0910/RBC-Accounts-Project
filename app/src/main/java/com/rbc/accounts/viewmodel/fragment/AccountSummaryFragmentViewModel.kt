@@ -6,7 +6,7 @@ import com.rbc.accounts.model.AccountInfoSummaryType
 import com.rbc.accounts.model.BaseAccountSummaryModel
 import com.rbc.accounts.model.HeadingSummaryType
 import com.rbc.accounts.usecase.AccountsUseCase
-import com.rbc.accounts.view.viewHolder.AccountViewHolderType
+import com.rbc.accounts.view.viewHolder.AccountSummaryViewHolderType
 import com.rbc.rbcaccountlibrary.Account
 import com.rbc.rbcaccountlibrary.AccountType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,24 +35,6 @@ class AccountSummaryFragmentViewModel @Inject constructor(
 
             val accounts = accountsUseCase.getAccountsListUseCase()
 
-            val accountsMap = HashMap<AccountType, ArrayList<Account>>()
-            accounts.forEach { account ->
-                if (accountsMap.containsKey(account.type)) {
-                    accountsMap[account.type]?.add(account)
-                } else {
-                    accountsMap[account.type] = arrayListOf(account)
-                }
-            }
-
-            val accountSummaryList = ArrayList<BaseAccountSummaryModel>()
-            accountsMap.forEach { (t, u) ->
-                accountSummaryList.add(HeadingSummaryType(AccountViewHolderType.HEADING, t.name))
-                u.forEach { account ->
-                    accountSummaryList.add(AccountInfoSummaryType(AccountViewHolderType.ACCOUNT,
-                        account.name, account.number, account.balance, account.type.ordinal))
-                }
-            }
-
             _uiState.update {
                 if (accounts.isEmpty()) {
                     it.copy(
@@ -63,7 +45,7 @@ class AccountSummaryFragmentViewModel @Inject constructor(
                 } else {
                     it.copy(
                         isLoading = false,
-                        accounts = accountSummaryList,
+                        accounts = getAccountSummaryListFromAccountList(accounts),
                         isError = false
                     )
                 }
@@ -76,4 +58,25 @@ class AccountSummaryFragmentViewModel @Inject constructor(
         val accounts: List<BaseAccountSummaryModel> = emptyList(),
         val isError: Boolean = false
     )
+
+    private fun getAccountSummaryListFromAccountList(accounts: List<Account>) : List<BaseAccountSummaryModel> {
+        val accountsMap = HashMap<AccountType, ArrayList<Account>>()
+        accounts.forEach { account ->
+            if (accountsMap.containsKey(account.type)) {
+                accountsMap[account.type]?.add(account)
+            } else {
+                accountsMap[account.type] = arrayListOf(account)
+            }
+        }
+
+        val accountSummaryList = ArrayList<BaseAccountSummaryModel>()
+        accountsMap.forEach { (t, u) ->
+            accountSummaryList.add(HeadingSummaryType(AccountSummaryViewHolderType.HEADING, t.name))
+            u.forEach { account ->
+                accountSummaryList.add(AccountInfoSummaryType(AccountSummaryViewHolderType.ACCOUNT,
+                    account.name, account.number, account.balance, account.type.ordinal))
+            }
+        }
+        return accountSummaryList
+    }
 }

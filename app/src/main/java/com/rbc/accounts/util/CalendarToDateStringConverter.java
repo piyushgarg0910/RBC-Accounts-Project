@@ -20,4 +20,9 @@ public class CalendarToDateStringConverter {
         return new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
                 .format(timeInMillis);
     }
+
+    public String formatToDateListItem(Long timeInMillis) {
+        return new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+                .format(timeInMillis);
+    }
 }

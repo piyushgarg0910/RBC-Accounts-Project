@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.rbc.accounts.R
-import com.rbc.accounts.view.viewHolder.AccountViewHolderType
+import com.rbc.accounts.view.viewHolder.AccountSummaryViewHolderType
 
 class AccountSummaryItemSeparator(context: Context) : RecyclerView.ItemDecoration()  {
 
@@ -28,8 +28,8 @@ class AccountSummaryItemSeparator(context: Context) : RecyclerView.ItemDecoratio
                 .let { if (it == RecyclerView.NO_POSITION) return else it }
 
             outRect.bottom = when (adapter.getItemViewType(childAdapterPosition)) {
-                AccountViewHolderType.ACCOUNT.type -> accountDecoration?.intrinsicHeight!!
-                AccountViewHolderType.HEADING.type -> headingDecoration?.intrinsicHeight!!
+                AccountSummaryViewHolderType.ACCOUNT.type -> accountDecoration?.intrinsicHeight!!
+                AccountSummaryViewHolderType.HEADING.type -> headingDecoration?.intrinsicHeight!!
                 else -> 0
             }
         }
@@ -43,11 +43,11 @@ class AccountSummaryItemSeparator(context: Context) : RecyclerView.ItemDecoratio
 
                 if (childAdapterPosition == adapter.itemCount-1) {
                     Unit
-                } else if (adapter.getItemViewType(childAdapterPosition+1) == AccountViewHolderType.HEADING.type) {
+                } else if (adapter.getItemViewType(childAdapterPosition+1) == AccountSummaryViewHolderType.HEADING.type) {
                     Unit
-                } else if (adapter.getItemViewType(childAdapterPosition) == AccountViewHolderType.HEADING.type) {
+                } else if (adapter.getItemViewType(childAdapterPosition) == AccountSummaryViewHolderType.HEADING.type) {
                     headingDecoration?.drawSeparator(view, c)
-                } else if (adapter.getItemViewType(childAdapterPosition) == AccountViewHolderType.ACCOUNT.type) {
+                } else if (adapter.getItemViewType(childAdapterPosition) == AccountSummaryViewHolderType.ACCOUNT.type) {
                     accountDecoration?.drawSeparator(view, c)
                 } else {
                     Unit
